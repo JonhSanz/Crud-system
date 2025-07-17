@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Colección de productos
+    match /products/{productId} {
+      // Permite leer todos los productos públicamente
+      allow read: if true;
+      
+      // Permite crear nuevos productos (sin autenticación requerida)
+      allow create: if true
+        && request.resource.data.keys().hasAll(['name', 'price', 'description', 'status'])
+        && request.resource.data.price is number
+        && request.resource.data.price > 0
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.description is string
+        && request.resource.data.description.size() >= 5
+        && request.resource.data.status in ['active', 'inactive']
+        && (!exists(/databases/$(database)/documents/products/$(productId))
+            || request.resource.data.createdAt == request.time);
+      
+      // Permite actualizar productos solo si el usuario es el creador
+      allow update: if true
+        && request.resource.data.keys().hasAll(['name', 'price', 'description', 'status'])
+        && request.resource.data.price is number
+        && request.resource.data.price > 0
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.description is string
+        && request.resource.data.description.size() >= 5
+        && request.resource.data.status in ['active', 'inactive']
+        && request.resource.data.createdAt == resource.data.createdAt;
+      
+      // Permite eliminar productos solo si el usuario es el creador
+      allow delete: if true
+        && request.resource.data.createdAt == resource.data.createdAt;
+    }
+  }
+}

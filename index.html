@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD SYSTEM - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <header>
+        <h1>CRUD SYSTEM</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="create-products.html">Create Product</a>
+            <a href="product.html">View Products</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Welcome to the CRUD SYSTEM</h2>
+            <p>This is a simple website to manage your products. Use the navigation above to create new products or view existing ones.</p>
+        </section>
+    </main>
+    <script type="module" src="firebase-config.js"></script>
+    <script>
+        // Import Firebase SDKs directly
+        const firebaseApp = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js');
+        const firebaseFirestore = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js');
+        const firebaseStorage = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js');
+    </script>
+    <script type="module" src="firebase-config.js"></script>
+</body>
+</html>
